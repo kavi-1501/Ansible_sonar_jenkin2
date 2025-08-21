@@ -1,0 +1,20 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+
+    - name: Copy WAR to Tomcat
+      copy:
+        src: /var/lib/jenkins/workspace/Ansi_sonar_jenkin/Amazon-Web/target/Amazon.war
+        dest: /home/kavi/Batch11/Ansible_sonar_jenkin/Amazon/tomcat/apache-tomcat-10.1.42/webapps
+        mode: '0644'
+        remote_src: yes
+
+    - name: Make Tomcat startup script executable
+      file:
+        path: /home/kavi/Batch11/Ansible_sonar_jenkin/Amazon/tomcat/apache-tomcat-10.1.42/bin/startup.sh
+        mode: '0755'
+
+    - name: Start Tomcat
+      shell: /home/kavi/Batch11/Ansible_sonar_jenkin/Amazon/tomcat/apache-tomcat-10.1.42/bin/startup.sh
+
